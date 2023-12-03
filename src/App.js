@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
+import Footer from './layout/footer/footer';
+import { LayoutContainer } from './styled-components';
+import { Toaster } from 'react-hot-toast';
+import Header from './layout/header/header';
+import AuthProvider, { AuthContext } from './context';
+import Routing from './routes';
+import { useContext } from 'react';
+import styled from 'styled-components';
+
+const MainContainerLayout = styled.div`
+   padding-top: 45px;
+`
 
 function App() {
+  const { themeMode } = useContext(AuthContext);
+  console.log(themeMode, "theme")
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <LayoutContainer theme={themeMode.toString()} >
+          <Header theme={themeMode} />
+          <MainContainerLayout>
+            <Routing />
+          </MainContainerLayout>
+        </LayoutContainer>
+        <Footer />
+      </BrowserRouter>
+      <Toaster />
+    </>
   );
 }
 
